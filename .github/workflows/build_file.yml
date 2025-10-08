@@ -1,6 +1,10 @@
 name: rani-ukamble-group/build_file
 on:
-  workflow_call:
+  push:
+  workflow_dispatch:
+concurrency:
+  group: "${{ github.ref }}"
+  cancel-in-progress: true
 jobs:
   build1:
     runs-on: ubuntu-latest
@@ -11,4 +15,5 @@ jobs:
     - uses: actions/checkout@v4.1.0
       with:
         fetch-depth: 20
+        lfs: true
     - run: echo "Building the application..."
